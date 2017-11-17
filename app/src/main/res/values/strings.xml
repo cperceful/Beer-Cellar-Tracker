@@ -4,4 +4,9 @@
     <string name="register_button">Register</string>
     <string name="enter_email_address">Enter email address</string>
     <string name="enter_password">Enter password</string>
+    <string name="sign_in_button_context">Sign In Button</string>
+    <string name="register_button_context">Register Button</string>
+    <string name="password_field_context">Password Field</string>
+    <string name="email_field_context">Email field</string>
+    <string name="logo_context">Logo</string>
 </resources>
