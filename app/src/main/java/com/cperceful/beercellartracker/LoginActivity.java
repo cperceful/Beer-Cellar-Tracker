@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button registerButton;
     private FirebaseAuth firebaseAuth;
 
-    private static final String DEBUG_TAG = "BeerCellarTracker";
+    protected static final String DEBUG_TAG = "BeerCellarTracker";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         emailView = findViewById(R.id.autoCompleteText_email);
         passwordView = findViewById(R.id.editText_password);
         signInButton = findViewById(R.id.button_signIn);
-        registerButton = findViewById(R.id.button_register);
+        registerButton = findViewById(R.id.button_register_login);
 
         firebaseAuth = FirebaseAuth.getInstance();
 

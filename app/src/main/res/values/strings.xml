@@ -9,4 +9,12 @@
     <string name="password_field_context">Password Field</string>
     <string name="email_field_context">Email field</string>
     <string name="logo_context">Logo</string>
+    <string name="email_address_register_content">Email Address</string>
+    <string name="password_hint">PASSWORD</string>
+    <string name="confirm_password_hint">CONFIRM PASSWORD</string>
+    <string name="email_hint">EMAIL</string>
+    <string name="password_invalid_error">Password is invalid</string>
+    <string name="email_empty_error">Kind of actually need the email...</string>
+    <string name="email_invalid_error">That\'s not a valid email address though</string>
+    <string name="username_hint">USERNAME</string>
 </resources>
