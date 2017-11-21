@@ -62,7 +62,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:contentDescription="@string/email_field_context"
-        android:text="@string/enter_email_address"
+        android:hint="@string/enter_email_address"
         app:layout_constraintBottom_toTopOf="@+id/editText_password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

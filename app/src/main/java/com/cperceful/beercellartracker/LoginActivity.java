@@ -28,8 +28,6 @@ public class LoginActivity extends AppCompatActivity {
     private Button registerButton;
     private FirebaseAuth firebaseAuth;
 
-    protected static final String DEBUG_TAG = "BeerCellarTracker";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,10 +81,10 @@ public class LoginActivity extends AppCompatActivity {
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                Log.d(DEBUG_TAG, "Login successful: " + task.isSuccessful());
+                Log.d(Constants.DEBUG_TAG, "Login successful: " + task.isSuccessful());
 
                 if (!task.isSuccessful()){
-                    Log.d(DEBUG_TAG, "Problem signing in: " + task.getException());
+                    Log.d(Constants.DEBUG_TAG, "Problem signing in: " + task.getException());
                     generateErrorMessage("oof ouch owie sign in failed");
                 } else {
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);

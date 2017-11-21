@@ -1,5 +1,6 @@
 package com.cperceful.beercellartracker;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -112,21 +114,45 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void createUser(){
         final String email = emailText.getText().toString();
-        String password = passwordText.getText().toString();
+        final String password = passwordText.getText().toString();
         final String username = usernameText.getText().toString();
 
         firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                Log.d(LoginActivity.DEBUG_TAG, "Registration success: " + task.isSuccessful());
+                Log.d(Constants.DEBUG_TAG, "Registration success: " + task.isSuccessful());
 
                 if (!task.isSuccessful()){
-                    Log.d(LoginActivity.DEBUG_TAG, "Registration failed");
+                    Log.d(Constants.DEBUG_TAG, "Registration failed");
                     generateErrorMessage("Apparently user creation failed. My bad");
                 } else {
                     User user = new User(email, username);
                     String userId = task.getResult().getUser().getUid();
                     firebaseDatabase.child("users").child(userId).setValue(user);
+                    attemptLogin(email, password);
+                }
+            }
+        });
+    }
+
+    private void attemptLogin(String email, String password){
+        if (email.isEmpty() || password.isEmpty()){
+            return;
+        } else {
+            Toast.makeText(RegisterActivity.this, "Logging in", Toast.LENGTH_SHORT);
+        }
+
+        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                Log.d(Constants.DEBUG_TAG, "Login successful: " + task.isSuccessful());
+                if (!task.isSuccessful()){
+                    Log.d(Constants.DEBUG_TAG, "Login failed: " + task.getException());
+                    generateErrorMessage("Login failed");
+                } else {
+                    Intent shadowOfIntent = new Intent(RegisterActivity.this, MainActivity.class);
+                    finish();
+                    startActivity(shadowOfIntent);
                 }
             }
         });
