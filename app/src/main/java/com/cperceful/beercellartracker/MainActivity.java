@@ -141,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
         beerNameText.setText(model.getName());
         beerStyleText.setText(model.getStyle());
         abvText.setText(model.getAbv() + "%");
+        new ImageDownloadTask(model.getUrl(), beerIcon).execute();
 
     }
 }
