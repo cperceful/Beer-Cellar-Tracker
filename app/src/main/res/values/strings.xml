@@ -17,4 +17,6 @@
     <string name="email_empty_error">Kind of actually need the email...</string>
     <string name="email_invalid_error">That\'s not a valid email address though</string>
     <string name="username_hint">USERNAME</string>
+    <string name="beer_search_hint">Beer search</string>
+    <string name="search">Search</string>
 </resources>

@@ -6,7 +6,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,6 +31,11 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private EditText editTextBeerSearch;
     private Button searchButton;
+    private TextView breweryText;
+    private TextView beerNameText;
+    private TextView abvText;
+    private TextView beerStyleText;
+    private ImageView beerIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +48,12 @@ public class MainActivity extends AppCompatActivity {
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
         editTextBeerSearch = findViewById(R.id.editText_beerSearch);
         searchButton = findViewById(R.id.button_search);
+        breweryText = findViewById(R.id.textView_brewery);
+        beerNameText = findViewById(R.id.textView_beerName);
+        abvText = findViewById(R.id.textView_beerABV);
+        beerStyleText = findViewById(R.id.textView_beerStyle);
+        beerIcon = findViewById(R.id.imageView_beerIcon);
+
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         Log.d(Constants.DEBUG_TAG, "Getting username");
         getUsername();
+        beerIcon.setVisibility(View.INVISIBLE);
     }
 
     private void getUsername(){
@@ -107,10 +121,12 @@ public class MainActivity extends AppCompatActivity {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response){
                 BeerDataModel model = BeerDataModel.fromJson(response);
 
-                Log.d(Constants.DEBUG_TAG, "Beer name: " + model.getName());
-                Log.d(Constants.DEBUG_TAG, "Brewery: " + model.getBrewery());
-                Log.d(Constants.DEBUG_TAG, "Style: " + model.getStyle());
-                Log.d(Constants.DEBUG_TAG, "ABV: " + model.getAbv() + "%");
+                if (model == null){
+                    Toast.makeText(MainActivity.this, "Search returned no results", Toast.LENGTH_SHORT).show();
+                } else {
+                    updateUI(model);
+                }
+
             }
 
             @Override
@@ -118,6 +134,14 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(Constants.DEBUG_TAG, "Request failed: " + e.toString());
             }
         });
+    }
+
+    private void updateUI(BeerDataModel model){
+        breweryText.setText(model.getBrewery());
+        beerNameText.setText(model.getName());
+        beerStyleText.setText(model.getStyle());
+        abvText.setText(model.getAbv() + "%");
+
     }
 }
 
